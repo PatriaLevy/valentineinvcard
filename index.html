@@ -184,7 +184,7 @@
             </div>
             
             <div class="buttons">
-                <button class="btn" id="yesBtn">Yes! 💖</button>
+                <button class="btn" id="yesBtn">Yes!</button>
                 <button class="btn" id="noBtn">No</button>
             </div>
         </div>
@@ -195,16 +195,16 @@
                 <img id="successImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='8' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='8' fill='%23333'/%3E%3Cpath d='M 65 110 Q 100 135 135 110' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 70 Q 70 60 75 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 125 70 Q 130 60 140 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Cpath fill='%23ff1744' d='M 100 50 L 105 60 L 95 60 Z'/%3E%3C/svg%3E" alt="Happy Valentine">
             </div>
             <p>Alam ko namang mag yeyes ka e! 😏</p>
-            <p style="margin-top: 20px; font-size: 18px;">See you on Valentine's Day bibi!</p>
+            <p style="margin-top: 20px; font-size: 18px;">See you on Valentine's Day mimi!</p>
         </div>
     </div>
 
     <script>
         let noClickCount = 0;
         const maxNoClicks = 10;
-        let mobileAutoAdvance = null;  
-
-        const messages = [
+        let mobileAutoAdvance = null;
+        
+         const messages = [
             "Pwede ba kitang maging Valentina?💕",
             "Please? 🥺",
             "Pweaseeeee? ",
@@ -231,9 +231,9 @@
             click6: "https://drive.google.com/thumbnail?id=1o5sSU7DVwf6WSWZmLgHgAFx_83dVSh6A&sz=w400",      // After 6th No click
             click7: "https://drive.google.com/thumbnail?id=1JVD2drow6x1ad3iEIZRXwk5_W13qAj8s&sz=w400",      // After 7th No click
             click8: "https://drive.google.com/thumbnail?id=1YGYpZIjs3piAqkIBcGi3AHybkcDpUwos&sz=w400",      // After 8th No click
-            click9: "https://drive.google.com/thumbnail?id=1qQVu6S6zyq3AjfTuuEdqnpzBG3yaW-pi&sz=w400",      // After 9th No click
-            click10: "https://drive.google.com/thumbnail?id=1O4heQwiJICA7qJJjGUDRkK0fYJBikcCX&sz=w400",     // After 10th No click (using last image)
-            yesClicked: "https://drive.google.com/thumbnail?id=1f6LD21-_FPzBURa2uDQkLPQD2R29t31j&sz=w400"  // When Yes is clicked (NEW UNIQUE PHOTO!)
+            click9: "https://drive.google.com/thumbnail?id=1f6LD21-_FPzBURa2uDQkLPQD2R29t31j&sz=w400",      // After 9th No click
+            click10: "https://drive.google.com/thumbnail?id=1f6LD21-_FPzBURa2uDQkLPQD2R29t31j&sz=w400",     // After 10th No click (using last image)
+            yesClicked: "https://drive.google.com/thumbnail?id=1L28tgCJi-P1BfoHT7Pw0y5U6ZDIdU2jN&sz=w400"  // When Yes is clicked (NEW UNIQUE PHOTO!)
         };
         
         // If you don't have custom images, it will use cute default SVG images
@@ -321,14 +321,14 @@
             // EDIT YOUR EMAIL HERE!
             // Replace with your actual email address
             // ========================================
-            const yourEmail = 'patrialevy6@gmail.com';
+            const yourEmail = 'your.email@gmail.com';
             
             const currentTime = new Date().toLocaleString();
             
             // Create form data
             const formData = new FormData();
             formData.append('_subject', '💝 She Said YES to Valentine\'s Day! 💝');
-            formData.append('message', `Great news! 🎉\n\nShe just said YES to being your Valentine! 💕\n\nThe moment happened at: ${currentTime}\n\nTime to start planning something special!\n\nWith love`);
+            formData.append('message', `Great news! 🎉\n\nShe just said YES to being your Valentine! 💕\n\nThe moment happened at: ${currentTime}\n\nTime to start planning something special! \n\nWith love`);
             formData.append('_captcha', 'false');
             formData.append('_template', 'box');
             
@@ -342,49 +342,6 @@
                 console.log('Notification send attempt made');
             });
         }
-
-        // Auto-advance photos on mobile after 2 clicks
-function startMobileAutoAdvance() {
-    mobileAutoAdvance = setInterval(() => {
-        if (noClickCount < maxNoClicks) {
-            noClickCount++;
-            updateImage();
-            
-            // Update message
-            if (noClickCount < messages.length) {
-                message.textContent = messages[noClickCount];
-            }
-            
-            // Shrink No button
-            const newScale = 1 - (noClickCount * 0.1);
-            if (newScale > 0) {
-                noBtn.style.transform = `scale(${newScale})`;
-                noBtn.style.opacity = newScale;
-            }
-            
-            // Grow Yes button
-            const yesScale = 1 + (noClickCount * 0.15);
-            yesBtn.style.transform = `scale(${yesScale})`;
-            
-            // Move No button
-            moveNoButton();
-            
-            // Vibrate if available
-            if (navigator.vibrate) {
-                navigator.vibrate(30);
-            }
-            
-            // Hide No button after max clicks
-            if (noClickCount >= maxNoClicks) {
-                noBtn.style.display = 'none';
-                message.textContent = "The only option left is YES! 💖";
-                clearInterval(mobileAutoAdvance);
-            }
-        } else {
-            clearInterval(mobileAutoAdvance);
-        }
-    }, 10000); // Change photo every 2 seconds
-}
 
         noBtn.addEventListener('click', function() {
             noClickCount++;
@@ -412,18 +369,19 @@ function startMobileAutoAdvance() {
             if (noClickCount < maxNoClicks) {
                 moveNoButton();
             }
-
+            
+            // On mobile: start auto-advancing photos after 2 clicks
             if (isTouchDevice && noClickCount === 2 && !mobileAutoAdvance) {
-                startMobileAutoAdvance();  // ← NEW CODE
+                startMobileAutoAdvance();
             }
-
+            
             // Hide No button after max clicks
             if (noClickCount >= maxNoClicks) {
                 noBtn.style.display = 'none';
                 message.textContent = "The only option left is YES! 💖";
-                if (mobileAutoAdvance) {  // ← NEW CODE
-                    clearInterval(mobileAutoAdvance);  // ← NEW CODE
-                } 
+                if (mobileAutoAdvance) {
+                    clearInterval(mobileAutoAdvance);
+                }
             }
             
             // Shake animation for message
@@ -432,6 +390,49 @@ function startMobileAutoAdvance() {
                 message.style.animation = 'float 3s ease-in-out infinite';
             }, 10);
         });
+        
+        // Auto-advance photos on mobile after 2 clicks
+        function startMobileAutoAdvance() {
+            mobileAutoAdvance = setInterval(() => {
+                if (noClickCount < maxNoClicks) {
+                    noClickCount++;
+                    updateImage();
+                    
+                    // Update message
+                    if (noClickCount < messages.length) {
+                        message.textContent = messages[noClickCount];
+                    }
+                    
+                    // Shrink No button
+                    const newScale = 1 - (noClickCount * 0.1);
+                    if (newScale > 0) {
+                        noBtn.style.transform = `scale(${newScale})`;
+                        noBtn.style.opacity = newScale;
+                    }
+                    
+                    // Grow Yes button
+                    const yesScale = 1 + (noClickCount * 0.15);
+                    yesBtn.style.transform = `scale(${yesScale})`;
+                    
+                    // Move No button
+                    moveNoButton();
+                    
+                    // Vibrate if available
+                    if (navigator.vibrate) {
+                        navigator.vibrate(30);
+                    }
+                    
+                    // Hide No button after max clicks
+                    if (noClickCount >= maxNoClicks) {
+                        noBtn.style.display = 'none';
+                        message.textContent = "The only option left is YES! 💖";
+                        clearInterval(mobileAutoAdvance);
+                    }
+                } else {
+                    clearInterval(mobileAutoAdvance);
+                }
+            }, 2000); // Change photo every 2 seconds
+        }
         
         function moveNoButton() {
             noBtn.classList.add('moving');
@@ -524,4 +525,3 @@ function startMobileAutoAdvance() {
     </script>
 </body>
 </html>
-
