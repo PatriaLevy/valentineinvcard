@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Invitation 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3e0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .image-container {
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .message {
+            font-size: 24px;
+            color: #ff1744;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff1744, #ff5252);
+            color: white;
+            transform: scale(1);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 23, 68, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #757575, #9e9e9e);
+            color: white;
+            transform: scale(1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        #noBtn:hover {
+            transform: scale(0.95);
+        }
+        
+        #noBtn.moving {
+            position: absolute;
+            transition: all 0.2s ease-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            text-align: center;
+            color: #ff1744;
+        }
+
+        .success-message h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .success-message p {
+            font-size: 24px;
+            color: #666;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 4s linear;
+            opacity: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                top: -10%;
+            }
+            100% {
+                opacity: 0;
+                top: 110%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div id="mainScreen">
+            <div class="image-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='8' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='8' fill='%23333'/%3E%3Cpath d='M 70 120 Q 100 140 130 120' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 70 Q 65 60 70 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 130 70 Q 135 60 140 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3C/svg%3E" alt="Cute Valentine">
+            </div>
+            
+            <div class="message" id="message">
+                Pwede ba kitang maging Valentina?💕
+            </div>
+            
+            <div class="buttons">
+                <button class="btn" id="yesBtn">Yes! 💖</button>
+                <button class="btn" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="successScreen" class="hidden success-message">
+            <h1>🎉 Yay! 🎉</h1>
+            <div class="image-container">
+                <img id="successImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='8' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='8' fill='%23333'/%3E%3Cpath d='M 65 110 Q 100 135 135 110' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 70 Q 70 60 75 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 125 70 Q 130 60 140 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Cpath fill='%23ff1744' d='M 100 50 L 105 60 L 95 60 Z'/%3E%3C/svg%3E" alt="Happy Valentine">
+            </div>
+            <p>Alam ko namang mag yeyes ka e! 😏</p>
+            <p style="margin-top: 20px; font-size: 18px;">See you on Valentine's Day bibi!</p>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const maxNoClicks = 10;
+        
+        const messages = [
+            "Pwede ba kitang maging Valentina?💕",
+            "Please? 🥺",
+            "Pweaseeeee? ",
+            "Sure kana ba dyan? 🙏",
+            "Durog na'ko oh 💔",
+            "tumutulo na oh 😢",
+            "Wala ka bang puso? 😭",
+            "Pipindutin lang yung yes oh! Ahhhhhhhhhhhh(sumigaw)",
+            "Anoe? ganon nalang? 😔",
+            "Last chance! 💝",
+            "YES NA BIBIIIII 😭💕"
+        ];
+        
+        // ========================================
+        // YOUR CUSTOM IMAGES - Google Drive Photos
+        // ========================================
+        const images = {
+            initial: "https://drive.google.com/thumbnail?id=1bXm3uK3o2ARSdFrfzZCHk8l_GE3b4Gxi&sz=w400",     // Starting image
+            click1: "https://drive.google.com/thumbnail?id=1m6ROgSJ-aO7lpRXiQkwLs_5CCZqsMJ3L&sz=w400",      // After 1st No click
+            click2: "https://drive.google.com/thumbnail?id=1_ZpwLISPwa9dHKo0KtYi0gSZUJMAHpMP&sz=w400",      // After 2nd No click
+            click3: "https://drive.google.com/thumbnail?id=1O4heQwiJICA7qJJjGUDRkK0fYJBikcCX&sz=w400",      // After 3rd No click
+            click4: "https://drive.google.com/thumbnail?id=1R-wwxirpAHk8ZXf8XxelZZoxvXIa7KmX&sz=w400",      // After 4th No click
+            click5: "https://drive.google.com/thumbnail?id=1rlZ81MH4cGBf1matcYYMzXjpozYFlbTZ&sz=w400",      // After 5th No click
+            click6: "https://drive.google.com/thumbnail?id=1o5sSU7DVwf6WSWZmLgHgAFx_83dVSh6A&sz=w400",      // After 6th No click
+            click7: "https://drive.google.com/thumbnail?id=1JVD2drow6x1ad3iEIZRXwk5_W13qAj8s&sz=w400",      // After 7th No click
+            click8: "https://drive.google.com/thumbnail?id=1YGYpZIjs3piAqkIBcGi3AHybkcDpUwos&sz=w400",      // After 8th No click
+            click9: "https://drive.google.com/thumbnail?id=1qQVu6S6zyq3AjfTuuEdqnpzBG3yaW-pi&sz=w400",      // After 9th No click
+            click10: "https://drive.google.com/thumbnail?id=1O4heQwiJICA7qJJjGUDRkK0fYJBikcCX&sz=w400",     // After 10th No click (using last image)
+            yesClicked: "https://drive.google.com/thumbnail?id=1f6LD21-_FPzBURa2uDQkLPQD2R29t31j&sz=w400"  // When Yes is clicked (NEW UNIQUE PHOTO!)
+        };
+        
+        // If you don't have custom images, it will use cute default SVG images
+        const defaultImages = {
+            initial: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='8' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='8' fill='%23333'/%3E%3Cpath d='M 70 120 Q 100 140 130 120' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 70 Q 65 60 70 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 130 70 Q 135 60 140 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3C/svg%3E",
+            click1: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='10' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='10' fill='%23333'/%3E%3Cpath d='M 70 120 Q 100 135 130 120' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 75 Q 65 65 70 75' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 130 75 Q 135 65 140 75' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3C/svg%3E",
+            click2: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='12' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='12' fill='%23333'/%3E%3Cpath d='M 70 125 Q 100 140 130 125' stroke='%23ff1744' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 58 78 Q 63 68 68 78' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 132 78 Q 137 68 142 78' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='105' r='14' fill='%23ffb3d9' opacity='0.7'/%3E%3Ccircle cx='122' cy='105' r='14' fill='%23ffb3d9' opacity='0.7'/%3E%3C/svg%3E",
+            click3: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffc0d9'/%3E%3Cpath d='M 65 85 Q 70 75 75 85 Q 70 95 65 85' fill='%23333'/%3E%3Cpath d='M 125 85 Q 130 75 135 85 Q 130 95 125 85' fill='%23333'/%3E%3Cpath d='M 75 125 Q 100 145 125 125' stroke='%23ff1744' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 55 80 Q 60 70 65 80' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 135 80 Q 140 70 145 80' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='75' cy='108' r='15' fill='%23ffb3d9' opacity='0.8'/%3E%3Ccircle cx='125' cy='108' r='15' fill='%23ffb3d9' opacity='0.8'/%3E%3C/svg%3E",
+            click4: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffb5d5'/%3E%3Cpath d='M 60 90 L 70 80 L 80 90' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 120 90 L 130 80 L 140 90' stroke='%23333' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 80 125 Q 100 150 120 125' stroke='%23ff1744' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='70' cy='110' r='16' fill='%23ffb3d9' opacity='0.9'/%3E%3Ccircle cx='130' cy='110' r='16' fill='%23ffb3d9' opacity='0.9'/%3E%3Cpath d='M 90 65 L 95 55 L 100 65' stroke='%23ff1744' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 100 65 L 105 55 L 110 65' stroke='%23ff1744' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+            click5: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffaad0'/%3E%3Cpath d='M 60 95 L 75 75 L 85 95' stroke='%23333' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 115 95 L 125 75 L 140 95' stroke='%23333' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 85 130 Q 100 155 115 130' stroke='%23ff1744' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='65' cy='115' r='18' fill='%23ffb3d9'/%3E%3Ccircle cx='135' cy='115' r='18' fill='%23ffb3d9'/%3E%3Cpath d='M 85 60 L 90 50 L 95 60 L 100 50 L 105 60 L 110 50 L 115 60' stroke='%23ff1744' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+            click6: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ff9fcb'/%3E%3Cpath d='M 55 100 L 70 70 L 90 100' stroke='%23333' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 110 100 L 130 70 L 145 100' stroke='%23333' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 90 135 Q 100 160 110 135' stroke='%23ff1744' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='120' r='20' fill='%23ffb3d9'/%3E%3Ccircle cx='140' cy='120' r='20' fill='%23ffb3d9'/%3E%3Cpath d='M 80 55 Q 85 45 90 55 Q 95 45 100 55 Q 105 45 110 55 Q 115 45 120 55' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+            click7: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ff94c6'/%3E%3Cpath d='M 50 105 L 65 65 L 95 105' stroke='%23333' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 105 105 L 135 65 L 150 105' stroke='%23333' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 95 140 Q 100 165 105 140' stroke='%23ff1744' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='55' cy='125' r='22' fill='%23ffb3d9'/%3E%3Ccircle cx='145' cy='125' r='22' fill='%23ffb3d9'/%3E%3Cpath d='M 75 50 Q 80 40 85 50 Q 90 40 95 50 Q 100 40 105 50 Q 110 40 115 50 Q 120 40 125 50' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+            click8: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ff89c1'/%3E%3Cpath d='M 45 110 L 60 60 L 100 110' stroke='%23333' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 100 110 L 140 60 L 155 110' stroke='%23333' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 100 145 Q 100 170 100 145' stroke='%23ff1744' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='130' r='24' fill='%23ffb3d9'/%3E%3Ccircle cx='150' cy='130' r='24' fill='%23ffb3d9'/%3E%3Cline x1='85' y1='145' x2='95' y2='155' stroke='%23ccc' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='105' y1='145' x2='115' y2='155' stroke='%23ccc' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E",
+            click9: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ff7ebc'/%3E%3Cpath d='M 40 115 L 55 55 L 105 115' stroke='%23333' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 95 115 L 145 55 L 160 115' stroke='%23333' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 105 150 L 105 165' stroke='%23ff1744' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='45' cy='135' r='26' fill='%23ffb3d9'/%3E%3Ccircle cx='155' cy='135' r='26' fill='%23ffb3d9'/%3E%3Cline x1='80' y1='150' x2='90' y2='160' stroke='%23ccc' stroke-width='4' stroke-linecap='round'/%3E%3Cline x1='110' y1='150' x2='120' y2='160' stroke='%23ccc' stroke-width='4' stroke-linecap='round'/%3E%3Cline x1='90' y1='150' x2='85' y2='158' stroke='%23ccc' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='110' y1='150' x2='115' y2='158' stroke='%23ccc' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E",
+            click10: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ff73b7'/%3E%3Cpath d='M 35 120 L 50 50 L 110 120' stroke='%23333' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 90 120 L 150 50 L 165 120' stroke='%23333' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3Cline x1='95' y1='155' x2='105' y2='155' stroke='%23ff1744' stroke-width='10' stroke-linecap='round'/%3E%3Ccircle cx='40' cy='140' r='28' fill='%23ffb3d9'/%3E%3Ccircle cx='160' cy='140' r='28' fill='%23ffb3d9'/%3E%3Cline x1='75' y1='155' x2='85' y2='165' stroke='%23ccc' stroke-width='5' stroke-linecap='round'/%3E%3Cline x1='115' y1='155' x2='125' y2='165' stroke='%23ccc' stroke-width='5' stroke-linecap='round'/%3E%3Cline x1='85' y1='155' x2='80' y2='163' stroke='%23ccc' stroke-width='4' stroke-linecap='round'/%3E%3Cline x1='115' y1='155' x2='120' y2='163' stroke='%23ccc' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E",
+            yesClicked: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%23ffcce0'/%3E%3Ccircle cx='75' cy='85' r='8' fill='%23333'/%3E%3Ccircle cx='125' cy='85' r='8' fill='%23333'/%3E%3Cpath d='M 65 110 Q 100 135 135 110' stroke='%23ff1744' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 60 70 Q 70 60 75 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M 125 70 Q 130 60 140 70' stroke='%23333' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='78' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Ccircle cx='122' cy='100' r='12' fill='%23ffb3d9' opacity='0.6'/%3E%3Cpath fill='%23ff1744' d='M 100 50 L 105 60 L 95 60 Z'/%3E%3Cpath fill='%23ff1744' d='M 85 55 Q 90 45 95 55' /%3E%3Cpath fill='%23ff1744' d='M 105 55 Q 110 45 115 55' /%3E%3C/svg%3E"
+        };
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const message = document.getElementById('message');
+        const mainScreen = document.getElementById('mainScreen');
+        const successScreen = document.getElementById('successScreen');
+        const heartsContainer = document.getElementById('hearts');
+        const mainImage = document.querySelector('#mainScreen .image-container img');
+        const successImage = document.getElementById('successImage');
+
+        // Use custom images if provided, otherwise use defaults
+        function getImage(key) {
+            // Check if custom image exists and is not the placeholder
+            if (images[key] && !images[key].includes('YourImage') && !images[key].includes('YourInitialImage') && !images[key].includes('YourHappyImage')) {
+                return images[key];
+            }
+            return defaultImages[key] || defaultImages.initial;
+        }
+
+        // Set initial image
+        mainImage.src = getImage('initial');
+
+        function updateImage() {
+            let imageKey = 'initial';
+            
+            if (noClickCount >= 1 && noClickCount <= 10) {
+                imageKey = `click${noClickCount}`;
+            }
+            
+            mainImage.src = getImage(imageKey);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        yesBtn.addEventListener('click', function() {
+            // Change to happy image when Yes is clicked
+            mainImage.src = getImage('yesClicked');
+            successImage.src = getImage('yesClicked');
+            
+            // Send automatic notification
+            sendAutomaticNotification();
+            
+            // Small delay to show the happy image before transitioning
+            setTimeout(() => {
+                mainScreen.classList.add('hidden');
+                successScreen.classList.remove('hidden');
+                
+                // Create falling hearts
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(createHeart, i * 100);
+                }
+            }, 500);
+        });
+        
+        function sendAutomaticNotification() {
+            // ========================================
+            // EDIT YOUR EMAIL HERE!
+            // Replace with your actual email address
+            // ========================================
+            const yourEmail = 'patrialevy6@gmail.com';
+            
+            const currentTime = new Date().toLocaleString();
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('_subject', '💝 She Said YES to Valentine\'s Day! 💝');
+            formData.append('message', `Great news! 🎉\n\nShe just said YES to being your Valentine! 💕\n\nThe moment happened at: ${currentTime}\n\nTime to start planning something special!\n\nWith love`);
+            formData.append('_captcha', 'false');
+            formData.append('_template', 'box');
+            
+            // Send via FormSubmit (free service)
+            fetch(`https://formsubmit.co/${yourEmail}`, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                console.log('Notification sent successfully!');
+            }).catch(error => {
+                console.log('Notification send attempt made');
+            });
+        }
+
+        noBtn.addEventListener('click', function() {
+            noClickCount++;
+            
+            // Update image based on click count
+            updateImage();
+            
+            // Update message
+            if (noClickCount < messages.length) {
+                message.textContent = messages[noClickCount];
+            }
+            
+            // Shrink No button
+            const newScale = 1 - (noClickCount * 0.1);
+            if (newScale > 0) {
+                noBtn.style.transform = `scale(${newScale})`;
+                noBtn.style.opacity = newScale;
+            }
+            
+            // Grow Yes button
+            const yesScale = 1 + (noClickCount * 0.15);
+            yesBtn.style.transform = `scale(${yesScale})`;
+            
+            // Move No button to random position
+            if (noClickCount < maxNoClicks) {
+                moveNoButton();
+            }
+            
+            // Hide No button after max clicks
+            if (noClickCount >= maxNoClicks) {
+                noBtn.style.display = 'none';
+                message.textContent = "The only option left is YES! 💖";
+            }
+            
+            // Shake animation for message
+            message.style.animation = 'none';
+            setTimeout(() => {
+                message.style.animation = 'float 3s ease-in-out infinite';
+            }, 10);
+        });
+        
+        function moveNoButton() {
+            noBtn.classList.add('moving');
+            
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate random position within container
+            const maxX = containerRect.width - btnRect.width - 40;
+            const maxY = containerRect.height - btnRect.height - 40;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+        
+        // Detect if device is touch-enabled
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // Add mouse avoidance starting from 6th click (Desktop only)
+        if (!isTouchDevice) {
+            noBtn.addEventListener('mouseover', function(e) {
+                if (noClickCount >= 5) {
+                    moveNoButtonAway(e);
+                }
+            });
+            
+            noBtn.addEventListener('mousemove', function(e) {
+                if (noClickCount >= 5) {
+                    moveNoButtonAway(e);
+                }
+            });
+        }
+        
+        // For mobile: move button right before click from 6th attempt
+        if (isTouchDevice) {
+            noBtn.addEventListener('touchstart', function(e) {
+                if (noClickCount >= 5 && noClickCount < maxNoClicks) {
+                    e.preventDefault(); // Prevent the click
+                    moveNoButton(); // Move to random position
+                    
+                    // Vibrate if available
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
+                }
+            }, { passive: false });
+        }
+        
+        function moveNoButtonAway(e) {
+            if (noClickCount < maxNoClicks) {
+                noBtn.classList.add('moving');
+                
+                const container = document.querySelector('.container');
+                const containerRect = container.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+                
+                // Get cursor position relative to container
+                const cursorX = e.clientX - containerRect.left;
+                const cursorY = e.clientY - containerRect.top;
+                
+                // Calculate direction away from cursor
+                const btnCenterX = btnRect.left - containerRect.left + btnRect.width / 2;
+                const btnCenterY = btnRect.top - containerRect.top + btnRect.height / 2;
+                
+                const deltaX = btnCenterX - cursorX;
+                const deltaY = btnCenterY - cursorY;
+                
+                // Normalize and multiply by distance
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const moveDistance = 150;
+                
+                let newX = btnCenterX + (deltaX / distance) * moveDistance - btnRect.width / 2;
+                let newY = btnCenterY + (deltaY / distance) * moveDistance - btnRect.height / 2;
+                
+                // Keep within container bounds
+                const maxX = containerRect.width - btnRect.width - 40;
+                const maxY = containerRect.height - btnRect.height - 40;
+                
+                newX = Math.max(0, Math.min(newX, maxX));
+                newY = Math.max(0, Math.min(newY, maxY));
+                
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
