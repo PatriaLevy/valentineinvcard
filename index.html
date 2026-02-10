@@ -202,7 +202,8 @@
     <script>
         let noClickCount = 0;
         const maxNoClicks = 10;
-        
+        let mobileAutoAdvance = null;  
+
         const messages = [
             "Pwede ba kitang maging Valentina?💕",
             "Please? 🥺",
@@ -342,6 +343,49 @@
             });
         }
 
+        // Auto-advance photos on mobile after 2 clicks
+function startMobileAutoAdvance() {
+    mobileAutoAdvance = setInterval(() => {
+        if (noClickCount < maxNoClicks) {
+            noClickCount++;
+            updateImage();
+            
+            // Update message
+            if (noClickCount < messages.length) {
+                message.textContent = messages[noClickCount];
+            }
+            
+            // Shrink No button
+            const newScale = 1 - (noClickCount * 0.1);
+            if (newScale > 0) {
+                noBtn.style.transform = `scale(${newScale})`;
+                noBtn.style.opacity = newScale;
+            }
+            
+            // Grow Yes button
+            const yesScale = 1 + (noClickCount * 0.15);
+            yesBtn.style.transform = `scale(${yesScale})`;
+            
+            // Move No button
+            moveNoButton();
+            
+            // Vibrate if available
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
+            
+            // Hide No button after max clicks
+            if (noClickCount >= maxNoClicks) {
+                noBtn.style.display = 'none';
+                message.textContent = "The only option left is YES! 💖";
+                clearInterval(mobileAutoAdvance);
+            }
+        } else {
+            clearInterval(mobileAutoAdvance);
+        }
+    }, 2000); // Change photo every 2 seconds
+}
+
         noBtn.addEventListener('click', function() {
             noClickCount++;
             
@@ -368,11 +412,18 @@
             if (noClickCount < maxNoClicks) {
                 moveNoButton();
             }
-            
+
+            if (isTouchDevice && noClickCount === 2 && !mobileAutoAdvance) {
+                startMobileAutoAdvance();  // ← NEW CODE
+            }
+
             // Hide No button after max clicks
             if (noClickCount >= maxNoClicks) {
                 noBtn.style.display = 'none';
                 message.textContent = "The only option left is YES! 💖";
+                if (mobileAutoAdvance) {  // ← NEW CODE
+                    clearInterval(mobileAutoAdvance);  // ← NEW CODE
+                } 
             }
             
             // Shake animation for message
